@@ -57,6 +57,7 @@ ax.set_aspect('equal', 'box')
 ax.plot(points[hits,0], points[hits,1],'.', c='red', alpha=0.5)
 ax.plot(points[not_hits,0], points[not_hits,1],'.', c='black', alpha=0.5)
 
+# I will place two weak points here
 ax.scatter([-15,15], [40, 40], s=100, c='green')
 
 plt.show()
@@ -74,31 +75,3 @@ x,y = tt.get_offsets().transpose()
 ax.scatter(x,y,s = 5, c='white')
 
 plt.show()
-
-
-
-
-
-# For a random walk flight path
-if plotter:
-    fig, ax = plt.subplots()
-
-    coll = PolyCollection(plane.current(), edgecolors='black')
-    ax.add_collection(coll)
-
-
-    for i in range(1,10):
-
-        plane.move_forward( 140 )
-        if i % 2 ==0:
-            rr = -45 + np.random.random_sample()*90
-            turn_rad = np.radians(rr)
-            plane.update_rotation( turn_rad )
-
-        coll = PolyCollection(plane.current(), edgecolors='black')
-        ax.add_collection(coll)
-
-
-    ax.autoscale_view()
-    ax.set_aspect('equal', 'box')
-    plt.show()
