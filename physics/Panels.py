@@ -244,10 +244,35 @@ class plane(object):
         list_bool = [pan.contains_point(x, y) for pan in self.__panels]
         return any(list_bool)
 
+    def __panels_contain_point(self, x, y):
+        list_bool = [pan.current_contains_point(x, y) for pan in self.__panels]
+        return list_bool
 
     def current_contains_point(self, x, y):
-        list_bool = [pan.current_contains_point(x, y) for pan in self.__panels]
+        list_bool = self.__panels_contain_point(x, y)
         return any(list_bool)
+
+
+    def calculate_damage_of_shot(self, x, y):
+        critical_points = np.array(
+            [[-15,40],
+            [15, 40]])
+
+        exp_decay = 1.0/10.0
+
+        hit = self.current_contains_point(x, y)
+        if not hit:
+            return 0
+        if hit:
+            hitpoint = np.array([x,y])
+            distances = [np.linalg.norm(hitpoint - crit) for crit in critical_points]
+            min_dist = min(distances)
+
+            damage = np.exp(-min_dist * exp_decay)
+            return(damage)
+
+
+
 
 
 
