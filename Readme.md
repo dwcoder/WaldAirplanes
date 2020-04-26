@@ -36,3 +36,18 @@ Next step is to work on a damage process with which to simulate killing the plan
 Finally, I can try to infer that damage process using statistical modeling, to see where the plane's weak points are (and help Wald determine where to re-enforce the armour).
 
 Will also give this a proper project structure later.
+
+
+## Simulation
+
+The file [test_generate_destruction_data.py](./test_generate_destruction_data.py) uses a damage model to shoot at and destroy planes.
+Some sample data is given in the directory [plane_plots](./plane_plots), as images and json files of the hits.
+
+![plot1](./plane_plots/plane_1.png)
+
+![plot2](./plane_plots/plane_13.png)
+
+These can be analysed to figure out where the plane is weakest.
+Remember, Wald didn't get to see the destroyed planes, only the survivors.
+
+
