@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 from matplotlib import cm
 from matplotlib.collections import PolyCollection
+from importlib import reload
 
 from pprint import pprint as pp
 
@@ -42,9 +43,9 @@ y = 0.0
 
 shots = 10000
 points = [Panels.generate_point(radius=80) for x in range(shots)]
-print "Taking shots"
+print("Taking shots")
 hits = [plane.current_contains_point(*point) for point in points]
-print "Done"
+print("Done")
 points = np.array(points)
 
 not_hits = [not(hit) for hit in hits]
@@ -62,9 +63,22 @@ ax.scatter(points[hits,0], points[hits,1],s=6, c=damage, cmap=cm.Reds)
 
 plt.show()
 
-
 plt.clf()
 plt.close()
+
+
+### Kill some planes
+
+plane_test = copy.deepcopy(plane)
+
+
+Nshots = 100
+shots = [Panels.generate_point(radius=80) for x in range(shots)]
+print("Taking shots")
+for shot in shots:
+    plane_test.take_hit(*shot)
+
+plane_test.get_health()
 
 
 

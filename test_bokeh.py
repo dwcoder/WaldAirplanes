@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib.collections import PolyCollection
 import matplotlib as mpl
 import copy
+from importlib import reload
 
 import json
 from pprint import pprint as pp

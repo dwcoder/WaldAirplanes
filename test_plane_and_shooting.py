@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.collections import PolyCollection
 import matplotlib as mpl
 import copy
+from importlib import reload
 
 import json
 from pprint import pprint as pp
@@ -41,9 +42,9 @@ y = 0.0
 
 shots = 1000
 points = [Panels.generate_point(radius=80) for x in range(shots)]
-print "Taking shots"
+print("Taking shots")
 hits = [plane.current_contains_point(*point) for point in points]
-print "Done"
+print("Done")
 points = np.array(points)
 
 not_hits = [not(hit) for hit in hits]

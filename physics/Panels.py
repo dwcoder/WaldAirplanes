@@ -193,6 +193,8 @@ class plane(object):
 
         self.current_rotation = 0
 
+        self.__health=100
+
     def fix_ref_location(self, x, y):
         """This should only be run once.
         Ensure the midpoint of the plane is at 0,0
@@ -252,11 +254,23 @@ class plane(object):
         list_bool = self.__panels_contain_point(x, y)
         return any(list_bool)
 
+    def is_destroyed(self):
+        return bool(self.get_health() <= 0)
+
+    def get_health(self):
+        return self.__health
+
+    def take_hit(self, x, y):
+        dmg = self.calculate_damage_of_shot(x, y)
+        self.__health = self.__health - dmg
+        return dmg
 
     def calculate_damage_of_shot(self, x, y):
         critical_points = np.array(
             [[-15,40],
             [15, 40]])
+
+        multiplier = 5
 
         exp_decay = 1.0/10.0
 
@@ -268,7 +282,7 @@ class plane(object):
             distances = [np.linalg.norm(hitpoint - crit) for crit in critical_points]
             min_dist = min(distances)
 
-            damage = np.exp(-min_dist * exp_decay)
+            damage = multiplier * np.exp(-min_dist * exp_decay)
             return(damage)
 
 
