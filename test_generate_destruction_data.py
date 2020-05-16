@@ -11,7 +11,7 @@ from matplotlib import cm
 from matplotlib.collections import PolyCollection
 from importlib import reload
 
-from pprint import pprint as pp
+import pprint as pp
 
 import multiprocessing as mp
 
@@ -39,14 +39,29 @@ plane.fix_ref_location(-100, -100)
 plane.fix_ref_rotation(np.pi/2)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+# Make the plane face upwards
 turn_rad = np.radians(90)
 plane.update_rotation( turn_rad )
 
+# Write out the plane polygons in this position
 
-### Kill some planes
+plane_polys = plane.current()
+
+plane_polys = [x.tolist() for x in plane_polys]
+
+savepath = 'plane_plots'
+savename = 'plane_AA_shapes.json'
+savefullname = Path(savepath, savename)
+with open(savefullname, 'w') as f:
+    f.write(json.dumps(plane_polys, indent=2))
+
+# ------------------------------------------
+#   Kill some planes
+# ------------------------------------------
 
 
 def simulate_plane_damage(seed):
+    # Use the plane number as seed, otherwise parallel runs won't work properly
     np.random.seed(seed)
     plane_test = copy.deepcopy(plane)
     Nshots = 500
@@ -121,7 +136,7 @@ def plot_plane(key, plane_outcome):
     savename = '{name}.json'.format(name=key)
     savefullname = Path(savepath, savename)
     with open(savefullname, 'w') as f:
-        json.dump(plane_outcome, f)
+        f.write(json.dumps(plane_outcome))
 
     return None
 

@@ -156,16 +156,21 @@ class panel(object):
         Do a quick check
         If this function returns true it may contain the point.
         """
-        x_min = np.min(self.current()[:,0])
-        x_max = np.max(self.current()[:,0])
-        y_min = np.min(self.current()[:,1])
-        y_max = np.max(self.current()[:,1])
+        x_min = self.__current_x_min
+        x_max = self.__current_x_max
+        y_min = self.__current_y_min
+        y_max = self.__current_y_max
         if (x < x_min) or (x > x_max):
             return False
         if (y < y_min) or (y > y_max):
             return False
         return True
 
+    def _set_current_min_max(self):
+        self.__current_x_min = np.min(self.__current[:,0])
+        self.__current_x_max = np.max(self.__current[:,0])
+        self.__current_y_min = np.min(self.__current[:,1])
+        self.__current_y_max = np.max(self.__current[:,1])
 
     def calcualte_and_set_current(self):
         ref_poly = self.__polygon
@@ -178,6 +183,7 @@ class panel(object):
                                     self.current_loc_y)
 
         self.__current = rotated_and_translated
+        self._set_current_min_max()
 
     def current(self):
         return self.__current

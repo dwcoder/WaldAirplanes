@@ -42,7 +42,7 @@ y = 0.0
 
 shots = 1000
 points = [Panels.generate_point(radius=80) for x in range(shots)]
-print("Taking shots")
+print("Taking {} shots".format(shots))
 hits = [plane.current_contains_point(*point) for point in points]
 print("Done")
 points = np.array(points)
